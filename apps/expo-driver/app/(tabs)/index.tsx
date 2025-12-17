@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { usePoobelStore, useCurrentDriver, useDriverRoutes } from '@poobel/shared-data';
 import { Colors, StatusColors } from '../../constants/Colors';
 
@@ -17,7 +18,6 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const currentDriver = useCurrentDriver();
   const routes = currentDriver ? useDriverRoutes(currentDriver.id) : [];
-  const completeStop = usePoobelStore((state) => state.completeStop);
   const updateStopStatus = usePoobelStore((state) => state.updateStopStatus);
   const stops = usePoobelStore((state) => state.stops);
 
@@ -33,20 +33,12 @@ export default function HomeScreen() {
     setTimeout(() => setRefreshing(false), 1000);
   }, []);
 
-  const handleCompleteStop = (stopId: string) => {
-    Alert.alert(
-      'Complete Stop',
-      'Mark this stop as completed?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Complete',
-          onPress: () => {
-            completeStop(stopId);
-          },
-        },
-      ]
-    );
+  const handleCompleteStop = (stopId: string, address: string) => {
+    // Navigate to camera screen to capture delivery photo
+    router.push({
+      pathname: '/capture-photo',
+      params: { stopId, address },
+    });
   };
 
   const handleSkipStop = (stopId: string) => {
@@ -224,10 +216,10 @@ export default function HomeScreen() {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.completeButton}
-                onPress={() => handleCompleteStop(currentStop.id)}
+                onPress={() => handleCompleteStop(currentStop.id, currentStop.address)}
               >
-                <Ionicons name="checkmark-circle" size={20} color="white" />
-                <Text style={styles.completeButtonText}>Complete</Text>
+                <Ionicons name="camera" size={20} color="white" />
+                <Text style={styles.completeButtonText}>Take Photo</Text>
               </TouchableOpacity>
             </View>
 

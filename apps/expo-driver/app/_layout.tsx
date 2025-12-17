@@ -15,13 +15,11 @@ export default function RootLayout() {
       >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen
-          name="stop-details"
+          name="capture-photo"
           options={{
-            presentation: 'modal',
-            headerShown: true,
-            headerTitle: 'Stop Details',
-            headerStyle: { backgroundColor: '#12121a' },
-            headerTintColor: '#f5f5f7',
+            presentation: 'fullScreenModal',
+            headerShown: false,
+            animation: 'slide_from_bottom',
           }}
         />
       </Stack>
