@@ -1,135 +1,160 @@
-# Turborepo starter
+# Poobel - Waste Collection Management System
 
-This Turborepo starter is maintained by the Turborepo core team.
+A comprehensive demo of a waste collection management system with three interconnected applications that share real-time data synchronization.
 
-## Using this example
+## 🏗️ Architecture
 
-Run the following command:
+- **Turborepo** - Monorepo management
+- **pnpm** - Package manager
+- **Next.js** - Web applications (Dispatch Dashboard, Customer Portal)
+- **React Native + Expo** - Mobile applications (Driver App, Customer App)
+- **Zustand** - State management with localStorage persistence
 
-```sh
-npx create-turbo@latest
+## 📦 Applications
+
+### 1. Dispatch Dashboard (`apps/web-dispatch`)
+The operational command center for managing waste collection operations.
+
+**Features:**
+- Real-time fleet tracking with map view
+- Route management (add/remove stops dynamically)
+- Driver profiles with ratings and performance metrics
+- Performance analytics with charts
+- Direct messaging with drivers
+- Alert system for route issues
+
+**Pages:** Dashboard, Map, Drivers, Routes, Analytics, Messages
+
+### 2. Driver Mobile App (`apps/expo-driver`)
+Mobile application for waste collection drivers.
+
+**Features:**
+- Turn-by-turn navigation to stops
+- Stop sequence with customer notes
+- Mark stops as completed/skipped/problematic
+- Real-time route updates from dispatch
+- Performance feedback and ratings
+- Messaging with dispatch and customers
+
+**Pages:** Home, Schedule, Ratings, Messages, Settings
+
+### 3. Customer Mobile App (`apps/expo-customer`)
+Mobile application for customers to track their service.
+
+**Features:**
+- Live driver tracking with ETA
+- Service notifications
+- Service history
+- Rate drivers after completion
+- AI chat assistant
+- Schedule management
+
+**Pages:** Home, Activity, Settings, AI Chat, Review
+
+### 4. Customer Web Portal (`apps/web-customer`)
+Web portal for customers to manage their service.
+
+**Features:**
+- Same features as mobile app
+- AI chat assistant
+- Service settings management
+
+**Pages:** Home, Activity, AI Chat, Settings
+
+## 🔗 Shared Data Package (`packages/shared-data`)
+
+Contains:
+- TypeScript types for all entities
+- Mock data for demo
+- Zustand store with actions for real-time sync
+- All apps share the same state via localStorage
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- pnpm 9+
+
+### Installation
+
+```bash
+# Install dependencies
+pnpm install
 ```
 
-## What's inside?
+### Running the Demo
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+**Run all web apps:**
+```bash
+pnpm dev:web
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+**Run individual apps:**
+```bash
+# Dispatch Dashboard (http://localhost:3000)
+pnpm dev:dispatch
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+# Customer Web Portal (http://localhost:3001)
+pnpm dev:customer-web
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+# Driver Mobile App (Expo)
+cd apps/expo-driver && pnpm start
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+# Customer Mobile App (Expo)
+cd apps/expo-customer && pnpm start
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 🎯 Demo Flow
+
+The demo showcases the complete workflow:
+
+1. **Dispatch adds a stop** → Routes page → Add Stop button
+2. **Driver sees new stop** → Home page shows updated route
+3. **Driver completes stop** → Complete button → Customer notified
+4. **Customer reviews driver** → Rate Your Driver modal
+5. **Review appears** → Dispatch Drivers page & Driver Ratings page
+
+### Testing Real-Time Sync
+
+1. Open Dispatch Dashboard in one browser tab
+2. Open Customer Portal in another browser tab
+3. In Dispatch, go to Routes and add a new stop
+4. Customer sees notification about the new pickup
+5. In Driver app (or simulate), complete the stop
+6. Customer gets completion notification and can leave review
+7. Review appears in Dispatch drivers page
+
+## 🎨 Design System
+
+- Dark theme with green accent (#22c55e)
+- Consistent color variables across all apps
+- Responsive layouts
+- Smooth animations and transitions
+
+## 📁 Project Structure
 
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+poobel/
+├── apps/
+│   ├── web-dispatch/     # Next.js - Dispatch Dashboard
+│   ├── web-customer/     # Next.js - Customer Portal
+│   ├── expo-driver/      # Expo - Driver App
+│   └── expo-customer/    # Expo - Customer App
+├── packages/
+│   ├── shared-data/      # Types, mock data, Zustand store
+│   ├── eslint-config/    # Shared ESLint config
+│   ├── typescript-config/ # Shared TS config
+│   └── ui/               # Shared UI components
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
-### Remote Caching
+## 🔧 Technologies
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- **Frontend:** React 19, Next.js 16, React Native 0.81
+- **State:** Zustand with persist middleware
+- **Styling:** Tailwind CSS (web), StyleSheet (mobile)
+- **Charts:** Recharts
+- **Icons:** Lucide React (web), Expo Vector Icons (mobile)
+- **Build:** Turborepo, TypeScript 5.9
