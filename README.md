@@ -5,7 +5,7 @@ A comprehensive demo of a waste collection management system with three intercon
 ## 🏗️ Architecture
 
 - **Turborepo** - Monorepo management
-- **pnpm** - Package manager
+- **npm** - Package manager
 - **Next.js** - Web applications (Dispatch Dashboard, Customer Portal)
 - **React Native + Expo** - Mobile applications (Driver App, Customer App)
 - **Zustand** - State management with localStorage persistence
@@ -73,35 +73,35 @@ Contains:
 
 ### Prerequisites
 - Node.js 18+
-- pnpm 9+
+- npm 10+
 
 ### Installation
 
 ```bash
 # Install dependencies
-pnpm install
+npm install
 ```
 
 ### Running the Demo
 
 **Run all web apps:**
 ```bash
-pnpm dev:web
+npm run dev:web
 ```
 
 **Run individual apps:**
 ```bash
 # Dispatch Dashboard (http://localhost:3000)
-pnpm dev:dispatch
+npm run dev:dispatch
 
 # Customer Web Portal (http://localhost:3001)
-pnpm dev:customer-web
+npm run dev:customer-web
 
 # Driver Mobile App (Expo)
-cd apps/expo-driver && pnpm start
+cd apps/expo-driver && npm start
 
 # Customer Mobile App (Expo)
-cd apps/expo-customer && pnpm start
+cd apps/expo-customer && npm start
 ```
 
 ## 🎯 Demo Flow

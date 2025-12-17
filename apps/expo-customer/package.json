@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
-    "@poobel/shared-data": "workspace:*",
+    "@poobel/expo-ui": "*",
+    "@poobel/shared-data": "*",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/drawer": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",

@@ -1,1 +1,2 @@
-export { useColorScheme } from 'react-native';
+// Re-export from shared package for backwards compatibility
+export { useColorScheme } from '@poobel/expo-ui';
