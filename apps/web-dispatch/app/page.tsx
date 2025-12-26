@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { usePoobelStore } from '@poobel/shared-data';
+import { FleetMap } from '../components/FleetMap';
 import {
   Truck,
   MapPin,
@@ -185,6 +187,7 @@ export default function DashboardPage() {
   const routes = usePoobelStore((state) => state.routes);
   const stops = usePoobelStore((state) => state.stops);
   const alerts = usePoobelStore((state) => state.alerts);
+  const [selectedDriver, setSelectedDriver] = useState<string | null>(null);
 
   const activeDrivers = drivers.filter((d) => d.status !== 'offline').length;
   const completedStops = stops.filter((s) => s.status === 'completed').length;
@@ -241,27 +244,16 @@ export default function DashboardPage() {
         <div className="lg:col-span-2 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-[var(--text-primary)]">Fleet Overview</h2>
-            <button className="btn-secondary text-sm">View All</button>
+            <a href="/map" className="btn-secondary text-sm">View Full Map</a>
           </div>
-          <div className="map-placeholder rounded-lg h-64 mb-6 flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <MapPin className="w-12 h-12 text-[var(--accent-primary)] animate-pulse" />
-            </div>
-            {/* Driver markers simulation */}
-            {drivers.slice(0, 4).map((driver, index) => (
-              <div
-                key={driver.id}
-                className="absolute w-4 h-4 bg-[var(--accent-primary)] rounded-full border-2 border-white shadow-lg"
-                style={{
-                  left: `${20 + index * 20}%`,
-                  top: `${30 + (index % 2) * 30}%`,
-                }}
-              >
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[var(--bg-primary)] px-2 py-1 rounded text-xs whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
-                  {driver.name}
-                </div>
-              </div>
-            ))}
+          <div className="rounded-lg h-64 mb-6 overflow-hidden border border-[var(--border-primary)]">
+            <FleetMap
+              drivers={drivers}
+              stops={stops.slice(0, 5)}
+              selectedDriverId={selectedDriver}
+              onDriverSelect={setSelectedDriver}
+              showRouteLines={true}
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             {drivers.slice(0, 4).map((driver) => (

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { usePoobelStore, useCurrentCustomer, useCustomerNotifications } from '@poobel/shared-data';
+import { TrackingMap } from '../components/TrackingMap';
 import {
   MapPin,
   Clock,
@@ -133,23 +134,14 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="h-64 bg-[var(--bg-tertiary)] relative">
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M0%2020h40M20%200v40%22%20stroke%3D%22%232a2a36%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fsvg%3E')] opacity-50" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[var(--accent-info)] flex items-center justify-center animate-pulse">
-                      <Truck className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="w-32 h-1 bg-[var(--accent-primary)] rounded-full relative">
-                      <div className="absolute top-1/2 left-0 w-3 h-3 -translate-y-1/2 rounded-full bg-[var(--accent-info)]" />
-                      <div className="absolute top-1/2 right-0 w-3 h-3 -translate-y-1/2 rounded-full bg-[var(--accent-primary)]" />
-                    </div>
-                    <div className="w-10 h-10 rounded-full bg-[var(--accent-primary)] flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-white" />
-                    </div>
-                  </div>
-                </div>
+              {/* Live Tracking Map */}
+              <div className="h-72 relative overflow-hidden">
+                <TrackingMap
+                  customerLocation={currentCustomer.coordinates}
+                  customerAddress={currentCustomer.address}
+                  driver={assignedDriver}
+                  showDriver={true}
+                />
               </div>
 
               {/* ETA */}
